@@ -8,10 +8,10 @@ from io import BytesIO
 from fastai import *
 from fastai.vision import *
 
-export_file_url = 'https://www.dropbox.com/s/weu6aurvuwtacov/export.pkl?dl=1'
+export_file_url = 'https://www.dropbox.com/s/3kpjg8qz14a9gr1/animalexport.pkl?dl=1'
 export_file_name = 'export.pkl'
 
-classes = ['apple', 'banana', 'durian', 'dragonfruit', 'watermelon', 'orange', 'kiwi']
+classes = ['mammal', 'amphibian', 'reptile', 'bird', 'fish', 'insect']
 path = Path(__file__).parent
 
 app = Starlette()
@@ -48,6 +48,11 @@ def index(request):
     html = path/'view'/'index.html'
     return HTMLResponse(html.open().read())
 
+@app.route('/about')
+def index(request):
+    html = path/'view'/'about.html'
+    return HTMLResponse(html.open().read())
+
 @app.route('/analyze', methods=['POST'])
 async def analyze(request):
     data = await request.form()
@@ -57,4 +62,4 @@ async def analyze(request):
     return JSONResponse({'result': str(prediction)})
 
 if __name__ == '__main__':
-    if 'serve' in sys.argv: uvicorn.run(app=app, host='0.0.0.0', port=3000)
+    if 'serve' in sys.argv: uvicorn.run(app=app, host='0.0.0.0', port=8080)
